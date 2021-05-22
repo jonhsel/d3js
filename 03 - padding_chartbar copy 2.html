@@ -33,9 +33,15 @@
             .attr("width", w)
             .attr("height", h);
 
+        //criar a rotina para incluir o padding do gráfico
+        var chart = svg.append("g") //incluir o append "g" - group para inserir as margens
+            .classed("display", true) // para mostrar
+            .attr("transform", "translate("+ margin.left + "," + margin.top + ")");
+
         //INSTANCIAR AS BARRAS NO SVG
-        svg.selectAll("bar")
-            .data(media)
+        function plot(params){
+            this.selectAll("bar")
+            .data(params.data) // os dados serão passados como parametro
             .enter()
                 .append("rect")
                 .classed("bar", true)
@@ -52,25 +58,30 @@
                     return y(1)-1;
                 })
 
-        //DEFINIR OS LABELS DOS GRÁFICOS
-        svg.selectAll(".bar-label")
-                .data(media)
+            //DEFINIR OS LABELS DOS GRÁFICOS
+            this.selectAll(".bar-label")
+                .data(params.data) //os dados serão passados como parametro
                 .enter()
                     .append("text")
-                    .classed("bar-label", true)
+                    .classed("bar-label", true) //classe para acessar o .css
                     .attr("x", function(d,i){
                         return x(d);
                     })
-                    .attr("dx", -5)
+                    .attr("dx", -5) //padding - diferença para ajustar a posição do label
                     .attr("y", function(d,i){
                         return y(i);;
                     })
-                    .attr("dy", function(d,i){
+                    .attr("dy", function(d,i){ //diferença para ajustar a posição do label
                         return y(1)/1.5-1;
                     })
                     .text(function(d,i){
                         return d;
-                    });
+                    });   
+        }
+
+        plot.call(svg, {
+            data: media
+        });
     </script>
 </body>
 </html>
