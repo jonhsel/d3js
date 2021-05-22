@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Visualização de dados com D#.js</title>
+        <link rel="stylesheet" href="main.css">
+        <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
+    </head>
+    <body>
+        <p>Arrays e objetos</p>
+
+        <script>
+            //array
+            var media = [10, 11, 12, 13, 19, 21];
+            console.log(media);  
+
+            //dicionario
+            var disciplina = {key: "Algoritmos I", value: 12}
+            console.log(disciplina)
+            console.log(disciplina.key);
+
+            var disciplinas = [
+                {key: "engenharia de controle", value: 10},
+                {key: "tópicos especiais", value: 16},
+                {key: "ciencia de dados", value: 13}
+            ]
+            console.log(disciplinas[1].key, disciplinas[2].value);
+
+            console.log("FOR:")
+            for(var i=0, len=disciplinas.length; i < len; i++){
+                console.log(disciplinas[i].key, disciplinas[i].value);
+            }
+
+            //forEach
+            console.log("forEach:")
+            disciplinas.forEach(function(entry){
+                console.log(entry.key, entry.value);
+            });
+
+        </script>
+        
+
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Visualização de dados com D#.js</title>
+        <link rel="stylesheet" href="main.css">
+        <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
+    </head>
+    <body>
+        <p>Filter e Map </p>
+
+        <script>
+            //filter
+            var media = [55, 56, 60, 72, 80, 85];
+            var mediamaior70 = media.filter(function(entry){
+                return entry > 70;
+            });
+            console.log("Valores maiores que 70: ", mediamaior70);
+
+           
+            
+
+            var disciplinas = [
+                {key: "engenharia de controle", value: 55},
+                {key: "tópicos especiais", value: 56},
+                {key: "ciencia de dados", value: 60},
+                {key: "sistemas operacionais", value: 72},
+                {key: "programação", value: 80},
+                {key: "estatistica", value: 85}
+            ]
+            var disciplinasmaior70 = disciplinas.filter(function(entry){
+                return entry.value < 70;
+            });
+            console.log("Disciplinas maiores que 70:", disciplinasmaior70);
+
+            // FUNCAO MAP
+            var mapdisciplinas = disciplinas.map(function(entry){
+                return {
+                    Disciplina: entry.key,
+                    Media: entry.value
+                };
+            });
+            mapdisciplinas.forEach(function(entry){
+                console.log(entry);
+            });
+           // console.log(mapdisciplinas);
+
+        </script>
+        
+
+    </body>
+</html>
