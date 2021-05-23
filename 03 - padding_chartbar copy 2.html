@@ -17,15 +17,28 @@
 
         var w = 800;
         var h = 450;
+
+        var margin = { //definição dos valores das margens
+            top: 20,
+            bottom: 20,
+            left: 20,
+            right: 20
+        };
+
+        // nova margem com valores do padding subtraídos
+        var width = w - margin.left - margin.right;
+        var height = h - margin.top - margin.bottom;
+
         var media = [70, 71, 73, 62, 78, 91, 85, 68];
 
         // ESCALA DO GRÁFICO
         var x = d3.scale.linear()
             .domain([0,d3.max(media)]) //vai de 0 até o maximo dos itens
-            .range([0,w]);
+            .range([0,width]); //novos valores
+
         var y = d3.scale.linear()
             .domain([0, media.length]) //vai de 0 até a qauntidade de itens
-            .range([0,h]);
+            .range([0,height]); //novos valores
 
         //CRIAR O ELEMENTO SVG
         var svg = d3.select("body").append("svg")
@@ -36,7 +49,7 @@
         //criar a rotina para incluir o padding do gráfico
         var chart = svg.append("g") //incluir o append "g" - group para inserir as margens
             .classed("display", true) // para mostrar
-            .attr("transform", "translate("+ margin.left + "," + margin.top + ")");
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         //INSTANCIAR AS BARRAS NO SVG
         function plot(params){
@@ -79,7 +92,8 @@
                     });   
         }
 
-        plot.call(svg, {
+        //plot.call(svg, { //no lugar de svg, chama-se o chart
+        plot.call(chart, {
             data: media
         });
     </script>
