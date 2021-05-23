@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <script type="text/javascript" src="d3.min.js"></script>
+    <title>Chart Bar</title>
+</head>
+<body>
+    <!-- inclusão de tag svg -->
+    <!-- <svg id="chart"></svg> --> 
+
+    <!-- inclusão de svg utilizando d3.js -->
+    <script>
+
+        var w = 800;
+        var h = 450;
+
+        var margin = { //definição dos valores das margens
+            top: 20,
+            bottom: 20,
+            left: 20,
+            right: 20
+        };
+
+        // nova margem com valores do padding subtraídos
+        var width = w - margin.left - margin.right;
+        var height = h - margin.top - margin.bottom;
+
+        //var media = [70, 71, 73, 62, 78, 91, 85, 68];
+        var disciplinas = [
+            {key: "Lógica", 	    				value: 78},
+            {key: "Álgebra I", 						value: 71},
+	        {key: "Orientação a Objetos", 			value: 67},
+	        {key: "Estatística I",					value: 93},
+	        {key: "Sistemas Operacionais I", 	    value: 59},
+	        {key: "Física Experimental", 			value: 43},
+	        {key: "Engenharia de Software", 		value: 88},
+	        {key: "Estrutura de Dados",				value: 36},
+	        {key: "Algoritmos I", 	    			value: 91},
+	        {key: "Algoritmos II", 					value: 74},
+	        {key: "Programação Java", 				value: 67},
+	        {key: "Programação Python",				value: 75}
+        ];
+
+        // ESCALA DO GRÁFICO
+        var x = d3.scale.linear()
+            .domain([0,d3.max(disciplinas, function(d){
+                return d.value;
+            })]) //vai de 0 até o maximo dos itens
+            .range([0,width]); //novos valores
+
+        var y = d3.scale.linear()
+            .domain([0, disciplinas.length]) //vai de 0 até a qauntidade de itens
+            .range([0,height]); //novos valores
+
+        //CRIAR O ELEMENTO SVG
+        var svg = d3.select("body").append("svg")
+            .attr("id", "chart")
+            .attr("width", w)
+            .attr("height", h);
+
+        //criar a rotina para incluir o padding do gráfico
+        var chart = svg.append("g") //incluir o append "g" - group para inserir as margens
+            .classed("display", true) // para mostrar
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        //INSTANCIAR AS BARRAS NO SVG
+        function plot(params){
+            this.selectAll("bar")
+            .data(params.data) // os dados serão passados como parametro
+            .enter()
+                .append("rect")
+                .classed("bar", true)
+                .attr("x", 0)
+                .attr("y", function(d,i){
+                    //return i * 20;
+                    return y(i);
+                })
+                .attr("width", function(d,i){
+                    //return d;
+                    return x(d.value);
+                })
+                .attr("height", function(d,i){
+                    return y(1)-1;
+                })
+
+            //DEFINIR OS LABELS DOS GRÁFICOS
+            this.selectAll(".bar-label")
+                .data(params.data) //os dados serão passados como parametro
+                .enter()
+                    .append("text")
+                    .classed("bar-label", true) //classe para acessar o .css
+                    .attr("x", function(d,i){
+                        return x(d.value);
+                    })
+                    .attr("dx", -5) //padding - diferença para ajustar a posição do label
+                    .attr("y", function(d,i){
+                        return y(i);;
+                    })
+                    .attr("dy", function(d,i){ //diferença para ajustar a posição do label
+                        return y(1)/1.5-1;
+                    })
+                    .text(function(d,i){
+                        return d.value;
+                    });   
+        }
+
+        //plot.call(svg, { //no lugar de svg, chama-se o chart
+        plot.call(chart, {
+            data: disciplinas
+        });
+    </script>
+</body>
+</html>
