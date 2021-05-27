@@ -53,7 +53,7 @@
             .range([0,width]); //novos valores
 
         var y = d3.scale.linear()
-            .domain([0, disciplinas.length]) //vai de 0 até a qauntidade de itens
+            .domain([0, disciplinas.length]) //vai de 0 até a quantidade de itens
             .range([0,height]); //novos valores
 
         //CRIAR O ELEMENTO SVG
@@ -103,7 +103,7 @@
                     .attr("dy", function(d,i){ //diferença para ajustar a posição do label
                         return y(1)/1.5-1;
                     })
-                    .text(function(d,i){
+                    .text(function(d,i){ //insere o valor
                         return d.value;
                     });   
         }
